@@ -2,6 +2,11 @@ using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+/*
+I'm working on some comments throughout the code, just give me some time or ask me about certain stuff
+if you need to know what something does =D
+*/
+
 namespace ClickerGame
 {
     public partial class Form1 : Form
