@@ -11,3 +11,7 @@ A small little clicker game/form made with C#
 
 # Info
 Since I'm quite lazy and don't want to learn Unity, I decided to make this through a Windows Form App, since I already had VS experience.
+*More to come to info later*
+
+# Dev Info
+- Committing through VS Code is *in my opinion* easier than committing in Visual Studio, so I can't really help if you're trying to make commits through Visual Studio. **Despite this**, you still can commit through Visual Studio, but if it doesn't work, I can't help
