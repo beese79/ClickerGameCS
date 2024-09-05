@@ -10,7 +10,7 @@ A small little clicker game/form made with C#
 - **NOTE:** Editing the `Form1.cs` file can be done through VS Code, **however**, it is *highly* recommended to edit through Visual Studio for GUI debugging
 
 # Info
-Since I'm quite lazy and don't want to learn Unity, I decided to make this through a Windows Form App, since I already had VS experience.
+- Since I'm quite lazy and don't want to learn Unity, I decided to make this through a Windows Form App, since I already had VS experience.
 *More to come to info later*
 
 # Dev Info
