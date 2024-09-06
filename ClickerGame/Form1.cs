@@ -11,6 +11,15 @@ New contributors, PLEASE create your own branch when making commits for the firs
 Just common sense ;)
 */
 
+/*
+
+Put general ideas under this line
+********************************************************************
+e.g. Scrap GUI debug menu and add debug options into output console?
+/this is a real idea btw/
+********************************************************************
+
+*/
 namespace ClickerGame
 {
     public partial class Form1 : Form
