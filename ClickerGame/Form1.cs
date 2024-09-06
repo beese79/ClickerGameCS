@@ -22,6 +22,7 @@ e.g. Scrap GUI debug menu and add debug options into output console?
 */
 namespace ClickerGame
 {
+    // Working on transforming debug UI to a debug console to prepare for user-friendlyness
     public partial class Form1 : Form
     {
         private bool buttonLocked = false; // Flag to prevent rapid clicks
