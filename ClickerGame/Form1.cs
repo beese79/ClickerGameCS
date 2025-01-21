@@ -2,24 +2,8 @@ using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-/*
-I'm working on some comments throughout the code, just give me some time or ask me about certain stuff if you need to know what something does =D
-
-Feel free to also add any comments, issues, suggestions, etc down here as well, or state so on the GitHub repository
-
-New contributors, PLEASE create your own branch when making commits for the first time, so if anything goes wrong, we can revert back to main
-Just common sense ;)
-*/
-
-/*
-
-Put general ideas under this line
-********************************************************************
-
-*/
 namespace ClickerGame
 {
-    // Working on transforming debug UI to a debug console to prepare for user-friendlyness
     public partial class Form1 : Form
     {
         private bool buttonLocked = false; // Flag to prevent rapid clicks
@@ -29,30 +13,37 @@ namespace ClickerGame
         {
             InitializeComponent();
             StartAutoUpdateLoop();
-            this.AcceptButton = null; // Disable Enter key triggering the ButtonMain; players can't spam button
+            this.AcceptButton = null; // Disable Enter key triggering the ButtonMain
+            UpdateMultiplierCostLabel(); // Initialize multiplier cost label when form loads
         }
 
-        // Declared starting variables for score, autoclickers 1 and 2, and more to come
+        // Declared starting variables for score, autoclickers, multiplier, and cost of multiplier
         public int Score = 0;
         public bool HasAuto = false;
         public bool HasAuto2 = false;
+        public bool DebugMode = false;
+        public int Multiplier = 1; // Starting multiplier
+        public int MultiplierCost = 50; // Initial cost for the multiplier
 
-        private async void ButtonMain_Click(object sender, EventArgs e) // Code for main button
+        private async void ButtonMain_Click(object sender, EventArgs e)
         {
             if (buttonLocked) return; // Ignore the click if button is locked
 
             buttonLocked = true; // Lock the button to prevent rapid clicking
-            Score += 1;
+
+            // Apply the multiplier to the score
+            Score += Multiplier;
             UpdateScoreLabel();
 
             await Task.Delay(lockDuration); // Wait before allowing the next click
             buttonLocked = false; // Unlock the button
         }
 
-        private void ButtonAutoBuy_Click(object sender, EventArgs e) // Purchase button for lvl 1 autoclicker
+        private void ButtonAutoBuy_Click(object sender, EventArgs e)
         {
             if (HasAuto || HasAuto2)
             {
+                LabelAutoInfo.Text = "already purchased";
                 MessageBox.Show("You have already purchased the autoclicker.", "Purchase Incomplete", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -61,7 +52,6 @@ namespace ClickerGame
             {
                 MessageBox.Show("Autoclicker purchased!", "Purchase Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 HasAuto = true;
-                LabelAutoInfo.Text = "already purchased";
                 Score -= 150;
                 UpdateScoreLabel();
             }
@@ -71,78 +61,20 @@ namespace ClickerGame
             }
         }
 
-        private void ButtonDebugAuto_Click(object sender, EventArgs e) // Button for autoclicker in debug menu
+        private void ButtonMultBuy_Click(object sender, EventArgs e)
         {
-            DialogResult DebugOptLvl1 = MessageBox.Show("Proceeding will not allow you to revert back to autoclicker 2, are you sure? (This is subject to change)", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
-            if (DebugOptLvl1 == DialogResult.Yes && HasAuto2)
+            // Check if player has enough score to buy the multiplier
+            if (Score >= MultiplierCost)
             {
-                MessageBox.Show("You have been given autoclicker.", "Confirmation");
-                HasAuto = true;
-            }
-            else
-            {
-                MessageBox.Show("Cancelled. You have not been given autoclicker.", "Confirmation");
-            }
-        }
+                Multiplier += 1; // Increase the multiplier
+                Score -= MultiplierCost; // Deduct the cost from the score
 
-        private void ButtonDebugScore_Click(object sender, EventArgs e) // Button for score giver in debug menu
-        {
-            Score += 1000;
-            UpdateScoreLabel();
-        }
+                // Increase the multiplier cost for the next purchase (e.g., double the cost each time)
+                MultiplierCost *= 2;
 
-        private void UpdateScoreLabel() // Process to update score label
-        {
-            LabelScoreNum.Text = Score.ToString();
-        }
-
-        private async void StartAutoUpdateLoop() // Updates process
-        {
-            while (true)
-            {
-                if (HasAuto) // Process for autoclicker 1
-                {
-                    await Task.Delay(1000);
-                    Score += 1;
-                    UpdateScoreLabel();
-                    LabelAuto2.Show();
-                    LabelAutoInfo2.Show();
-                    ButtonAuto2Buy.Show();
-                }
-                else if (HasAuto2) // Process for autoclicker 2
-                { 
-                    await Task.Delay(500);
-                    Score += 1;
-                    UpdateScoreLabel();
-
-                }
-                else
-                {
-                    await Task.Delay(100);
-                }
-            }
-        }
-
-        private void LabelAuto2_Click(object sender, EventArgs e)
-        {
-            // DO NOT TOUCH, for some reason, code won't run without this
-        }
-
-        private void ButtonAuto2Buy_Click(object sender, EventArgs e) // Purchase button for lvl 2 autoclicker
-        {
-            if (HasAuto2)
-            {
-                MessageBox.Show("You have already purchased the autoclicker.", "Purchase Incomplete", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (HasAuto && Score > 349)
-            {
-                MessageBox.Show("Autoclicker level 2 purchased!", "Purchase Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                HasAuto2 = true;
-                HasAuto = false;
-                LabelAutoInfo2.Text = "already purchased";
-                Score -= 350;
+                MessageBox.Show($"Multiplier increased! New multiplier: x{Multiplier}", "Purchase Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                UpdateScoreLabel();
+                UpdateMultiplierCostLabel(); // Update the multiplier cost label after purchase
             }
             else
             {
@@ -150,18 +82,96 @@ namespace ClickerGame
             }
         }
 
-        private void ButtonDebugAuto2_Click(object sender, EventArgs e) // Button for autoclicker 2 in debug menu
+        private void ButtonDebugScore_Click(object sender, EventArgs e)
         {
-            DialogResult DebugOptLvl2 = MessageBox.Show("Proceeding will not allow you to purchase level 2 in the shop if hidden. Are you sure? (This does not apply if you already have autoclicker 2)", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
-            if (DebugOptLvl2 == DialogResult.Yes)
+            Score += 1000;
+            UpdateScoreLabel();
+        }
+
+        // Updates the score label to reflect the current score
+        private void UpdateScoreLabel()
+        {
+            LabelScoreNum.Text = $"{Score}";
+            LabelMultNum.Text = $"{Multiplier}";
+        }
+
+        // Updates the multiplier cost label to reflect the current multiplier cost
+        private void UpdateMultiplierCostLabel()
+        {
+            LabelMultInfo.Text = $"{MultiplierCost} score required";
+        }
+
+        private async void StartAutoUpdateLoop()
+        {
+            while (true)
             {
-                MessageBox.Show("You have been given autoclicker 2.", "Confirmation");
+                if (HasAuto)
+                {
+                    LabelAuto2.Show();
+                    LabelAutoInfo2.Show();
+                    ButtonAuto2Buy.Show();
+                    await Task.Delay(1000);
+                    Score += 1 * Multiplier; // Apply the multiplier to autoclicker gains
+                    UpdateScoreLabel();
+                }
+                else if (HasAuto2)
+                {
+                    await Task.Delay(300);
+                    Score += 1 * Multiplier; // Apply the multiplier to autoclicker gains
+                    UpdateScoreLabel();
+                }
+                else
+                {
+                    await Task.Delay(100);
+                }
+
+                
+            }
+
+        }
+        /* GPT messed up my code, DO NOT TOUCH ANYTHING PAST THIS LINE (unless I do something with it, which I probably won't)
+        * (this causes the debug menu to not function, I'll do something about that)
+        */
+
+        private void ButtonAuto2Buy_Click(object sender, EventArgs e)
+        {
+            if (HasAuto2)
+            {
+                MessageBox.Show("You have already purchased the autoclicker.", "Purchase Incomplete", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (Score >= 350)
+            {
+                MessageBox.Show("Autoclicker purchased!", "Purchase Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                HasAuto = false;
                 HasAuto2 = true;
+                LabelAutoInfo2.Text = "already purchased";
+                Score -= 350;
+                UpdateScoreLabel();
             }
             else
             {
-                MessageBox.Show("Cancelled. You have not been given autoclicker 2.", "Confirmation");
+                MessageBox.Show("Your funds are insufficient. You have not been charged.", "Purchase Incomplete", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void ButtonDebugAuto2_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Autoclicker purchased!", "Purchase Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            HasAuto = false;
+            HasAuto2 = true;
+        }
+
+        private void ButtonDebugAuto_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Autoclicker purchased!", "Purchase Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            HasAuto = true;
+        }
+
+        private void LabelAuto2_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

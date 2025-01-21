@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\emery\\source\\repos\\ClickerGame\\ClickerGame\\ClickerGame.csproj",
+      "projectUniqueName": "C:\\Users\\emery\\Source\\Repos\\beese79\\ClickerGameCS\\ClickerGame\\ClickerGame.csproj",
       "projectName": "ClickerGame",
-      "projectPath": "C:\\Users\\emery\\source\\repos\\ClickerGame\\ClickerGame\\ClickerGame.csproj",
+      "projectPath": "C:\\Users\\emery\\Source\\Repos\\beese79\\ClickerGameCS\\ClickerGame\\ClickerGame.csproj",
       "packagesPath": "C:\\Users\\emery\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\emery\\source\\repos\\ClickerGame\\ClickerGame\\obj\\",
+      "outputPath": "C:\\Users\\emery\\Source\\Repos\\beese79\\ClickerGameCS\\ClickerGame\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\emery\\AppData\\Roaming\\NuGet\\NuGet.Config",

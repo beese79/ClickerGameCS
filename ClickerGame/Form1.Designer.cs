@@ -28,10 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.LabelTitle = new System.Windows.Forms.Label();
             this.ButtonMain = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.ButtonMultBuy = new System.Windows.Forms.Button();
+            this.LabelMultInfo = new System.Windows.Forms.Label();
+            this.LabelMult = new System.Windows.Forms.Label();
             this.ButtonAuto2Buy = new System.Windows.Forms.Button();
             this.LabelAutoInfo2 = new System.Windows.Forms.Label();
             this.LabelAuto2 = new System.Windows.Forms.Label();
@@ -40,6 +44,7 @@
             this.LabelAuto = new System.Windows.Forms.Label();
             this.LabelShopTitle = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.ButtonDebugAuto2 = new System.Windows.Forms.Button();
             this.ButtonDebugScore = new System.Windows.Forms.Button();
             this.ButtonDebugAuto = new System.Windows.Forms.Button();
             this.LabelDebugTitle = new System.Windows.Forms.Label();
@@ -47,7 +52,8 @@
             this.LabelBlueTitle = new System.Windows.Forms.Label();
             this.LabelScore = new System.Windows.Forms.Label();
             this.LabelScoreNum = new System.Windows.Forms.Label();
-            this.ButtonDebugAuto2 = new System.Windows.Forms.Button();
+            this.LabelMultNum = new System.Windows.Forms.Label();
+            this.LabelCurrentMult = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -78,7 +84,6 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Alignment = System.Windows.Forms.TabAlignment.Right;
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
@@ -92,6 +97,9 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.DarkGreen;
+            this.tabPage1.Controls.Add(this.ButtonMultBuy);
+            this.tabPage1.Controls.Add(this.LabelMultInfo);
+            this.tabPage1.Controls.Add(this.LabelMult);
             this.tabPage1.Controls.Add(this.ButtonAuto2Buy);
             this.tabPage1.Controls.Add(this.LabelAutoInfo2);
             this.tabPage1.Controls.Add(this.LabelAuto2);
@@ -100,12 +108,43 @@
             this.tabPage1.Controls.Add(this.LabelAuto);
             this.tabPage1.Controls.Add(this.LabelShopTitle);
             this.tabPage1.Font = new System.Drawing.Font("OCR A Extended", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.tabPage1.Location = new System.Drawing.Point(4, 4);
+            this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(628, 262);
+            this.tabPage1.Size = new System.Drawing.Size(651, 242);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "shop";
+            this.tabPage1.ToolTipText = "shop for stuff and progress";
+            // 
+            // ButtonMultBuy
+            // 
+            this.ButtonMultBuy.Location = new System.Drawing.Point(202, 85);
+            this.ButtonMultBuy.Name = "ButtonMultBuy";
+            this.ButtonMultBuy.Size = new System.Drawing.Size(75, 23);
+            this.ButtonMultBuy.TabIndex = 9;
+            this.ButtonMultBuy.Text = "purchase";
+            this.ButtonMultBuy.UseVisualStyleBackColor = true;
+            this.ButtonMultBuy.Click += new System.EventHandler(this.ButtonMultBuy_Click);
+            // 
+            // LabelMultInfo
+            // 
+            this.LabelMultInfo.AutoSize = true;
+            this.LabelMultInfo.Location = new System.Drawing.Point(176, 69);
+            this.LabelMultInfo.Name = "LabelMultInfo";
+            this.LabelMultInfo.Size = new System.Drawing.Size(105, 13);
+            this.LabelMultInfo.TabIndex = 8;
+            this.LabelMultInfo.Text = "score required";
+            // 
+            // LabelMult
+            // 
+            this.LabelMult.AutoSize = true;
+            this.LabelMult.Font = new System.Drawing.Font("OCR A Extended", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.LabelMult.ForeColor = System.Drawing.SystemColors.Control;
+            this.LabelMult.Location = new System.Drawing.Point(188, 52);
+            this.LabelMult.Name = "LabelMult";
+            this.LabelMult.Size = new System.Drawing.Size(108, 17);
+            this.LabelMult.TabIndex = 7;
+            this.LabelMult.Text = "multiplier";
             // 
             // ButtonAuto2Buy
             // 
@@ -133,7 +172,7 @@
             this.LabelAuto2.AutoSize = true;
             this.LabelAuto2.Font = new System.Drawing.Font("OCR A Extended", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.LabelAuto2.ForeColor = System.Drawing.SystemColors.Control;
-            this.LabelAuto2.Location = new System.Drawing.Point(12, 130);
+            this.LabelAuto2.Location = new System.Drawing.Point(14, 130);
             this.LabelAuto2.Name = "LabelAuto2";
             this.LabelAuto2.Size = new System.Drawing.Size(108, 17);
             this.LabelAuto2.TabIndex = 4;
@@ -176,11 +215,12 @@
             this.LabelShopTitle.AutoSize = true;
             this.LabelShopTitle.Font = new System.Drawing.Font("OCR A Extended", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.LabelShopTitle.ForeColor = System.Drawing.SystemColors.Control;
-            this.LabelShopTitle.Location = new System.Drawing.Point(188, 0);
+            this.LabelShopTitle.Location = new System.Drawing.Point(235, 0);
             this.LabelShopTitle.Name = "LabelShopTitle";
-            this.LabelShopTitle.Size = new System.Drawing.Size(278, 25);
+            this.LabelShopTitle.Size = new System.Drawing.Size(180, 25);
             this.LabelShopTitle.TabIndex = 0;
-            this.LabelShopTitle.Text = "welcome to the shop";
+            this.LabelShopTitle.Text = "useful stuff";
+            this.LabelShopTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tabPage2
             // 
@@ -189,12 +229,22 @@
             this.tabPage2.Controls.Add(this.ButtonDebugScore);
             this.tabPage2.Controls.Add(this.ButtonDebugAuto);
             this.tabPage2.Controls.Add(this.LabelDebugTitle);
-            this.tabPage2.Location = new System.Drawing.Point(4, 4);
+            this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(628, 262);
+            this.tabPage2.Size = new System.Drawing.Size(651, 242);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "debug";
+            // 
+            // ButtonDebugAuto2
+            // 
+            this.ButtonDebugAuto2.Location = new System.Drawing.Point(6, 79);
+            this.ButtonDebugAuto2.Name = "ButtonDebugAuto2";
+            this.ButtonDebugAuto2.Size = new System.Drawing.Size(113, 23);
+            this.ButtonDebugAuto2.TabIndex = 3;
+            this.ButtonDebugAuto2.Text = "give autoclicker 2";
+            this.ButtonDebugAuto2.UseVisualStyleBackColor = true;
+            this.ButtonDebugAuto2.Click += new System.EventHandler(this.ButtonDebugAuto2_Click);
             // 
             // ButtonDebugScore
             // 
@@ -221,7 +271,7 @@
             this.LabelDebugTitle.AutoSize = true;
             this.LabelDebugTitle.Font = new System.Drawing.Font("OCR A Extended", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.LabelDebugTitle.ForeColor = System.Drawing.SystemColors.Control;
-            this.LabelDebugTitle.Location = new System.Drawing.Point(112, 0);
+            this.LabelDebugTitle.Location = new System.Drawing.Point(123, 0);
             this.LabelDebugTitle.Name = "LabelDebugTitle";
             this.LabelDebugTitle.Size = new System.Drawing.Size(404, 25);
             this.LabelDebugTitle.TabIndex = 0;
@@ -231,10 +281,10 @@
             // 
             this.tabPage3.BackColor = System.Drawing.Color.MidnightBlue;
             this.tabPage3.Controls.Add(this.LabelBlueTitle);
-            this.tabPage3.Location = new System.Drawing.Point(4, 4);
+            this.tabPage3.Location = new System.Drawing.Point(4, 24);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(628, 262);
+            this.tabPage3.Size = new System.Drawing.Size(651, 242);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "tabPage3";
             // 
@@ -243,7 +293,7 @@
             this.LabelBlueTitle.AutoSize = true;
             this.LabelBlueTitle.Font = new System.Drawing.Font("OCR A Extended", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.LabelBlueTitle.ForeColor = System.Drawing.SystemColors.Control;
-            this.LabelBlueTitle.Location = new System.Drawing.Point(197, 0);
+            this.LabelBlueTitle.Location = new System.Drawing.Point(200, 0);
             this.LabelBlueTitle.Name = "LabelBlueTitle";
             this.LabelBlueTitle.Size = new System.Drawing.Size(250, 25);
             this.LabelBlueTitle.TabIndex = 0;
@@ -269,31 +319,44 @@
             this.LabelScoreNum.TabIndex = 4;
             this.LabelScoreNum.Text = "0";
             // 
-            // ButtonDebugAuto2
+            // LabelMultNum
             // 
-            this.ButtonDebugAuto2.Location = new System.Drawing.Point(6, 79);
-            this.ButtonDebugAuto2.Name = "ButtonDebugAuto2";
-            this.ButtonDebugAuto2.Size = new System.Drawing.Size(113, 23);
-            this.ButtonDebugAuto2.TabIndex = 3;
-            this.ButtonDebugAuto2.Text = "give autoclicker 2";
-            this.ButtonDebugAuto2.UseVisualStyleBackColor = true;
-            this.ButtonDebugAuto2.Click += new System.EventHandler(this.ButtonDebugAuto2_Click);
+            this.LabelMultNum.AutoSize = true;
+            this.LabelMultNum.ForeColor = System.Drawing.SystemColors.Control;
+            this.LabelMultNum.Location = new System.Drawing.Point(649, 342);
+            this.LabelMultNum.Name = "LabelMultNum";
+            this.LabelMultNum.Size = new System.Drawing.Size(13, 15);
+            this.LabelMultNum.TabIndex = 6;
+            this.LabelMultNum.Text = "0";
+            // 
+            // LabelCurrentMult
+            // 
+            this.LabelCurrentMult.AutoSize = true;
+            this.LabelCurrentMult.ForeColor = System.Drawing.SystemColors.Control;
+            this.LabelCurrentMult.Location = new System.Drawing.Point(582, 342);
+            this.LabelCurrentMult.Name = "LabelCurrentMult";
+            this.LabelCurrentMult.Size = new System.Drawing.Size(61, 15);
+            this.LabelCurrentMult.TabIndex = 5;
+            this.LabelCurrentMult.Text = "multiplier:";
             // 
             // Form1
             // 
+            this.AcceptButton = this.ButtonMain;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(683, 383);
+            this.Controls.Add(this.LabelMultNum);
+            this.Controls.Add(this.LabelCurrentMult);
             this.Controls.Add(this.LabelScoreNum);
             this.Controls.Add(this.LabelScore);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.ButtonMain);
             this.Controls.Add(this.LabelTitle);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.ShowIcon = false;
             this.Text = "Clicker Game";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -329,5 +392,10 @@
         private Label LabelAutoInfo2;
         private Label LabelAuto2;
         private Button ButtonDebugAuto2;
+        private Button ButtonMultBuy;
+        private Label LabelMultInfo;
+        private Label LabelMult;
+        private Label LabelMultNum;
+        private Label LabelCurrentMult;
     }
 }
