@@ -25,6 +25,8 @@ namespace ClickerGame
         public int Multiplier = 1; // Starting multiplier
         public int MultiplierCost = 50; // Initial cost for the multiplier
 
+        // #region ButtonMain Functionality
+
         private async void ButtonMain_Click(object sender, EventArgs e)
         {
             if (buttonLocked) return; // Ignore the click if button is locked
@@ -38,6 +40,8 @@ namespace ClickerGame
             await Task.Delay(lockDuration); // Wait before allowing the next click
             buttonLocked = false; // Unlock the button
         }
+
+        // #region Shop Functionality
 
         private void ButtonAutoBuy_Click(object sender, EventArgs e)
         {
@@ -88,6 +92,8 @@ namespace ClickerGame
             UpdateScoreLabel();
         }
 
+        // #region Updates
+
         // Updates the score label to reflect the current score
         private void UpdateScoreLabel()
         {
@@ -124,14 +130,10 @@ namespace ClickerGame
                 {
                     await Task.Delay(100);
                 }
-
-                
             }
-
         }
-        /* GPT messed up my code, DO NOT TOUCH ANYTHING PAST THIS LINE (unless I do something with it, which I probably won't)
-        * (this causes the debug menu to not function, I'll do something about that)
-        */
+
+        // #region Debug Functionality
 
         private void ButtonAuto2Buy_Click(object sender, EventArgs e)
         {
@@ -171,7 +173,10 @@ namespace ClickerGame
 
         private void LabelAuto2_Click(object sender, EventArgs e)
         {
-            
+            // Leave empty
         }
+
+        // #endregion
+
     }
 }
