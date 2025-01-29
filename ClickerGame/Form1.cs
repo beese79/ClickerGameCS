@@ -25,7 +25,7 @@ namespace ClickerGame
         public int Multiplier = 1; // Starting multiplier
         public int MultiplierCost = 50; // Initial cost for the multiplier
 
-        // #region ButtonMain Functionality
+        #region ButtonMain
 
         private async void ButtonMain_Click(object sender, EventArgs e)
         {
@@ -41,7 +41,7 @@ namespace ClickerGame
             buttonLocked = false; // Unlock the button
         }
 
-        // #region Shop Functionality
+        #region Shop Buttons
 
         private void ButtonAutoBuy_Click(object sender, EventArgs e)
         {
@@ -92,7 +92,7 @@ namespace ClickerGame
             UpdateScoreLabel();
         }
 
-        // #region Updates
+        #region Updates
 
         // Updates the score label to reflect the current score
         private void UpdateScoreLabel()
@@ -133,7 +133,7 @@ namespace ClickerGame
             }
         }
 
-        // #region Debug Functionality
+        #region Debug
 
         private void ButtonAuto2Buy_Click(object sender, EventArgs e)
         {
@@ -176,7 +176,7 @@ namespace ClickerGame
             // Leave empty
         }
 
-        // #endregion
+        #endregion
 
     }
 }
